@@ -7,20 +7,13 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ResultImageCell: UICollectionViewCell {
     
     var image: Image! {
         didSet {
-            if let url = URL(string: image.original ?? "") {
-                DispatchQueue.global().async { [weak self] in
-                    if let data = try? Data(contentsOf: url) {
-                        DispatchQueue.main.async {
-                            self?.imageView.image = UIImage(data: data)
-                        }
-                    }
-                }
-            }
+            imageView.sd_setImage(with: URL(string: image.original ?? ""))
         }
     }
     
@@ -29,6 +22,7 @@ class ResultImageCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .white
         imageView.layer.borderWidth = 0.5
         
