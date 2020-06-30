@@ -96,7 +96,7 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
     
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let presentViewController = DetailImageController(urlString: results[indexPath.item].original ?? "")
+        let presentViewController = DetailImageController(images: results, currentNumber: indexPath.item)
         presentViewController.modalPresentationStyle = .fullScreen
         navigationController?.present(presentViewController, animated: true, completion: nil)
     }

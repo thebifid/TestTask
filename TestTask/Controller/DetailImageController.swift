@@ -13,12 +13,14 @@ class DetailImageController: UIViewController {
     //fileprivate let urlString: String
     
     
-    let urlString : String
+    let images: [Image]
+    var currentNumber: Int
     
     let imageView = UIImageView()
     
-    init(urlString: String) {
-        self.urlString = urlString
+    init(images: [Image], currentNumber: Int) {
+        self.images = images
+        self.currentNumber = currentNumber
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -40,14 +42,26 @@ class DetailImageController: UIViewController {
     
     let rightButton = UIButton(title: "Next>>")
     let leftButton = UIButton(title: "<<Prev")
+    let openButton = UIButton(title: "Open")
 
+    @objc func handleRightClick() {
+        guard currentNumber < images.count - 1 else { return }
+        currentNumber += 1
+        imageView.sd_setImage(with: URL(string: images[currentNumber].original ?? ""))
+    }
+    
+    @objc func handleLeftClick() {
+        guard currentNumber > 1 else { return }
+        currentNumber -= 1
+        imageView.sd_setImage(with: URL(string: images[currentNumber].original ?? ""))
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        imageView.sd_setImage(with: URL(string: urlString))
+        imageView.sd_setImage(with: URL(string: images[currentNumber].original ?? ""))
         imageView.contentMode = .scaleAspectFit
         view.addSubview(imageView)
         imageView.fillSuperview(padding: .init(top: 0, left: 0, bottom: 120, right: 0))
@@ -55,19 +69,29 @@ class DetailImageController: UIViewController {
         view.addSubview(closeButton)
         closeButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 20, left: 0, bottom: 0, right: 16), size: .init(width: 44, height: 44))
         
-        [rightButton, leftButton].forEach({
+        [rightButton, leftButton, openButton].forEach({
             $0.backgroundColor = .blue
             $0.layer.cornerRadius = 16
             $0.titleLabel?.font = .boldSystemFont(ofSize: 20)
             $0.titleLabel?.textAlignment = .center
             $0.setTitleColor(.white, for: .normal)
-            view.addSubview($0)
+          //  $0.widthAnchor.constraint(equalToConstant: (view.frame.width / 3) - 20).isActive = true
         })
         
-        rightButton.anchor(top: nil, leading: nil, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 40, right: 40), size: .init(width: 140, height: 0))
+        let stackView = UIStackView(arrangedSubviews: [
+        leftButton,
+        openButton,
+        rightButton,
+        ])
+
+        view.addSubview(stackView)
+        stackView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 10, bottom: 60, right: 10))
+        stackView.alignment = .center
+        stackView.spacing = 5
+        stackView.distribution = .fillEqually
         
-        leftButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 40, bottom: 40, right: 0), size: .init(width: 140, height: 0))
-        
+        rightButton.addTarget(self, action: #selector(handleRightClick), for: .touchUpInside)
+        leftButton.addTarget(self, action: #selector(handleLeftClick), for: .touchUpInside)
     }
     
     
