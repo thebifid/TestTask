@@ -7,11 +7,9 @@
 //
 
 import UIKit
+import SafariServices
 
 class DetailImageController: UIViewController {
-    
-    //fileprivate let urlString: String
-    
     
     let images: [Image]
     var currentNumber: Int
@@ -56,6 +54,13 @@ class DetailImageController: UIViewController {
         imageView.sd_setImage(with: URL(string: images[currentNumber].original ?? ""))
     }
     
+    @objc func handleOpenClick(_ which: Int) {
+        if let url = URL(string: images[currentNumber].original ?? "") {
+            let vc = SFSafariViewController(url: url)
+            present(vc, animated: true)
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +80,6 @@ class DetailImageController: UIViewController {
             $0.titleLabel?.font = .boldSystemFont(ofSize: 20)
             $0.titleLabel?.textAlignment = .center
             $0.setTitleColor(.white, for: .normal)
-          //  $0.widthAnchor.constraint(equalToConstant: (view.frame.width / 3) - 20).isActive = true
         })
         
         let stackView = UIStackView(arrangedSubviews: [
@@ -92,6 +96,7 @@ class DetailImageController: UIViewController {
         
         rightButton.addTarget(self, action: #selector(handleRightClick), for: .touchUpInside)
         leftButton.addTarget(self, action: #selector(handleLeftClick), for: .touchUpInside)
+        openButton.addTarget(self, action: #selector(handleOpenClick), for: .touchUpInside)
     }
     
     

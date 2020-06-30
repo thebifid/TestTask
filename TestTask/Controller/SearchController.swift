@@ -11,9 +11,7 @@ import UIKit
 class SearchController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     
     let cellId = "cellId"
-    
     var results = [Image]()
-    
     let searchController = UISearchController(searchResultsController: nil)
     
     let activityIndicator: UIActivityIndicatorView = {
@@ -79,6 +77,7 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
                     DispatchQueue.main.async {
                         self.activityIndicator.stopAnimating()
                         self.errorLabel.alpha = 1
+                        self.collectionView.reloadData()
                     }
                     return
                 }
@@ -102,7 +101,7 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return results.count
+        return errorLabel.alpha == 0 ? results.count : 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
