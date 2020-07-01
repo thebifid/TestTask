@@ -17,7 +17,7 @@ class ResultImageCell: UICollectionViewCell {
         }
     }
     
-    let imageView = UIImageView(cornerRadius: 12)
+    fileprivate let imageView = UIImageView(cornerRadius: 12)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

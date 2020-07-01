@@ -13,6 +13,5 @@ struct SearchResult: Decodable {
 }
 
 struct Image: Decodable {
-    let position: Int
     let original: String?
 }

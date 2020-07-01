@@ -10,28 +10,27 @@ import UIKit
 
 class SearchController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     
-    let cellId = "cellId"
-    var results = [Image]()
-    let searchController = UISearchController(searchResultsController: nil)
+    fileprivate let cellId = "cellId"
+    fileprivate var results = [Image]()
+    fileprivate let searchController = UISearchController(searchResultsController: nil)
     
-    let activityIndicator: UIActivityIndicatorView = {
+    private let activityIndicator: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .large)
         aiv.color = .darkGray
         aiv.hidesWhenStopped = true
         return aiv
     }()
     
-    let errorLabel: UILabel = {
+    private let errorLabel: UILabel = {
         let label = UILabel()
         label.text = "Error loading data"
         label.font = .systemFont(ofSize: 28)
         label.textColor = UIColor(white: 0.5, alpha: 0.5)
         label.alpha = 0
-        
         return label
     }()
     
-    let enterSearhTermLabel: UILabel = {
+    private let enterSearhTermLabel: UILabel = {
         let label = UILabel()
         label.text = "Enter search term above..."
         label.font = .systemFont(ofSize: 28)
@@ -55,9 +54,7 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
         collectionView.addSubview(enterSearhTermLabel)
         enterSearhTermLabel.centerInSuperview()
         
-        
         setupSearchBar()
-        
     }
     
     fileprivate func setupSearchBar() {
@@ -82,7 +79,7 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
                     return
                 }
                 
-                 self.results = searchResult?.images_results ?? []
+                self.results = searchResult?.images_results ?? []
                 
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()

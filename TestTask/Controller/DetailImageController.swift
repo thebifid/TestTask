@@ -14,7 +14,11 @@ class DetailImageController: UIViewController {
     let images: [Image]
     var currentNumber: Int
     
-    let imageView = UIImageView()
+    fileprivate let rightButton = UIButton(title: "Next>>")
+    fileprivate let leftButton = UIButton(title: "<<Prev")
+    fileprivate let openButton = UIButton(title: "Open")
+    
+    fileprivate let imageView = UIImageView()
     
     init(images: [Image], currentNumber: Int) {
         self.images = images
@@ -38,10 +42,6 @@ class DetailImageController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    let rightButton = UIButton(title: "Next>>")
-    let leftButton = UIButton(title: "<<Prev")
-    let openButton = UIButton(title: "Open")
-
     @objc func handleRightClick() {
         guard currentNumber < images.count - 1 else { return }
         currentNumber += 1
@@ -83,11 +83,11 @@ class DetailImageController: UIViewController {
         })
         
         let stackView = UIStackView(arrangedSubviews: [
-        leftButton,
-        openButton,
-        rightButton,
+            leftButton,
+            openButton,
+            rightButton,
         ])
-
+        
         view.addSubview(stackView)
         stackView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 10, bottom: 60, right: 10))
         stackView.alignment = .center
@@ -98,8 +98,5 @@ class DetailImageController: UIViewController {
         leftButton.addTarget(self, action: #selector(handleLeftClick), for: .touchUpInside)
         openButton.addTarget(self, action: #selector(handleOpenClick), for: .touchUpInside)
     }
-    
-    
-    
     
 }
