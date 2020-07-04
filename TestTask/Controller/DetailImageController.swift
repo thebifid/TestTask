@@ -11,7 +11,6 @@ import SafariServices
 
 class DetailImageController: UIViewController {
     
-    let images: [Image]
     var currentNumber: Int
     
     fileprivate let rightButton = UIButton(title: "Next>>")
@@ -20,14 +19,12 @@ class DetailImageController: UIViewController {
     
     fileprivate let imageView = UIImageView()
     
-    init(images: [Image], currentNumber: Int) {
-        self.images = images
-        self.currentNumber = currentNumber
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) is not supported")
+    var images: [Image]! {
+        didSet {
+            ImageCache.shared.downloadImage(urlString: images[currentNumber].original ?? "") { (image) in
+                self.imageView.image = image
+            }
+        }
     }
     
     let closeButton: UIButton = {
@@ -42,31 +39,36 @@ class DetailImageController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func handleRightClick() {
+    @objc private func handleRightClick() {
         guard currentNumber < images.count - 1 else { return }
         currentNumber += 1
-        imageView.sd_setImage(with: URL(string: images[currentNumber].original ?? ""))
+        ImageCache.shared.downloadImage(urlString: images[currentNumber].original ?? "") { (image) in
+            self.imageView.image = image
+        }
     }
     
-    @objc func handleLeftClick() {
+    @objc private func handleLeftClick() {
         guard currentNumber > 1 else { return }
         currentNumber -= 1
-        imageView.sd_setImage(with: URL(string: images[currentNumber].original ?? ""))
+        ImageCache.shared.downloadImage(urlString: images[currentNumber].original ?? "") { (image) in
+            self.imageView.image = image
+        }
     }
     
-    @objc func handleOpenClick(_ which: Int) {
+    @objc private func handleOpenClick(_ which: Int) {
         if let url = URL(string: images[currentNumber].original ?? "") {
             let vc = SFSafariViewController(url: url)
             present(vc, animated: true)
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+    }
+    
+    private func setupUI() {
         view.backgroundColor = .white
-        
-        imageView.sd_setImage(with: URL(string: images[currentNumber].original ?? ""))
         imageView.contentMode = .scaleAspectFit
         view.addSubview(imageView)
         imageView.fillSuperview(padding: .init(top: 0, left: 0, bottom: 120, right: 0))
@@ -97,6 +99,21 @@ class DetailImageController: UIViewController {
         rightButton.addTarget(self, action: #selector(handleRightClick), for: .touchUpInside)
         leftButton.addTarget(self, action: #selector(handleLeftClick), for: .touchUpInside)
         openButton.addTarget(self, action: #selector(handleOpenClick), for: .touchUpInside)
+    }
+    
+    
+    init(images: [Image], currentNumber: Int) {
+        self.currentNumber = currentNumber
+        super.init(nibName: nil, bundle: nil)
+        setImages(images: images)
+    }
+    
+    private func setImages(images: [Image]) {
+        self.images = images
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) is not supported")
     }
     
 }

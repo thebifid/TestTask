@@ -7,17 +7,18 @@
 //
 
 import UIKit
-import SDWebImage
 
 class ResultImageCell: UICollectionViewCell {
     
     var image: Image! {
         didSet {
-            imageView.sd_setImage(with: URL(string: image.original ?? ""))
+            ImageCache.shared.downloadImage(urlString: image.original ?? "") { (image) in
+                self.imageView.image = image
+            }
         }
     }
     
-    fileprivate let imageView = UIImageView(cornerRadius: 12)
+    private let imageView = UIImageView(cornerRadius: 12)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -40,24 +40,24 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        collectionView.backgroundColor = .white
-        
+        setupUI()
         collectionView.register(ResultImageCell.self, forCellWithReuseIdentifier: cellId)
-        navigationItem.title = "Search"
-        
-        collectionView.addSubview(activityIndicator)
-        activityIndicator.centerInSuperview()
-        
-        collectionView.addSubview(errorLabel)
-        errorLabel.centerInSuperview()
-        collectionView.addSubview(enterSearhTermLabel)
-        enterSearhTermLabel.centerInSuperview()
         
         setupSearchBar()
     }
     
-    fileprivate func setupSearchBar() {
+    private func setupUI() {
+        collectionView.backgroundColor = .white
+        navigationItem.title = "Search"
+        collectionView.addSubview(activityIndicator)
+        activityIndicator.centerInSuperview()
+        collectionView.addSubview(errorLabel)
+        errorLabel.centerInSuperview()
+        collectionView.addSubview(enterSearhTermLabel)
+        enterSearhTermLabel.centerInSuperview()
+    }
+    
+    private func setupSearchBar() {
         navigationItem.searchController = self.searchController
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -78,7 +78,6 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
                     }
                     return
                 }
-                
                 self.results = searchResult?.images_results ?? []
                 
                 DispatchQueue.main.async {

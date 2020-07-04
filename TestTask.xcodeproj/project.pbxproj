@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		52FFFB25925250BD6755DFAB /* Pods_TestTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C630ECDCB5E9011C99402C59 /* Pods_TestTask.framework */; };
+		C1612DAD24B0926000D8610E /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1612DAC24B0926000D8610E /* ImageCache.swift */; };
 		C18AEC9724AB06F800E4139F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18AEC9624AB06F800E4139F /* AppDelegate.swift */; };
 		C18AEC9924AB06F800E4139F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18AEC9824AB06F800E4139F /* SceneDelegate.swift */; };
 		C18AECA024AB06FC00E4139F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C18AEC9F24AB06FC00E4139F /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		774ACD31CB8FAD8910115977 /* Pods-TestTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestTask.release.xcconfig"; path = "Target Support Files/Pods-TestTask/Pods-TestTask.release.xcconfig"; sourceTree = "<group>"; };
+		C1612DAC24B0926000D8610E /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		C18AEC9324AB06F800E4139F /* TestTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C18AEC9624AB06F800E4139F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C18AEC9824AB06F800E4139F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				C1ECC87824AB262C00D4089A /* Service.swift */,
+				C1612DAC24B0926000D8610E /* ImageCache.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1612DAD24B0926000D8610E /* ImageCache.swift in Sources */,
 				C18AEC9724AB06F800E4139F /* AppDelegate.swift in Sources */,
 				C1ECC87924AB262C00D4089A /* Service.swift in Sources */,
 				C1ECC87C24AB2D6A00D4089A /* SearchResult.swift in Sources */,
